@@ -121,7 +121,7 @@ class Program implements
     ): void {
         $this->steps = [];
 
-        foreach($steps as $step) {
+        foreach ($steps as $step) {
             $this->addStep($step);
         }
     }
@@ -144,9 +144,9 @@ class Program implements
     ): void {
         $id = $step->getId();
 
-        if(isset($this->steps[$id])) {
+        if (isset($this->steps[$id])) {
             throw Exceptional::InvalidArgument(
-                'Step '.$id.' is already defined'
+                'Step ' . $id . ' is already defined'
             );
         }
 
@@ -165,6 +165,8 @@ class Program implements
 
     /**
      * Export for serialization
+     *
+     * @return array<string,mixed>
      */
     public function jsonSerialize(): array
     {

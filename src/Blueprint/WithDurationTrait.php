@@ -27,7 +27,7 @@ trait WithDurationTrait
     public function setDuration(
         string|CarbonInterval|null $duration
     ): void {
-        if($duration !== null) {
+        if ($duration !== null) {
             $duration = CarbonInterval::make($duration);
         }
 
@@ -44,6 +44,8 @@ trait WithDurationTrait
 
     /**
      * Export for serialization
+     *
+     * @return array<string,string>
      */
     public function jsonSerialize(): array
     {

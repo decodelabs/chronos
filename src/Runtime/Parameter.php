@@ -13,6 +13,7 @@ use DateTimeInterface;
 use DecodeLabs\Chronos\Blueprint\ParameterType;
 
 /**
+ * @phpstan-type ParameterValue string|int|float|bool|array<string>|DateTimeInterface
  * @template T of string|int|float|bool|array<string>|DateTimeInterface
  */
 class Parameter
@@ -21,31 +22,33 @@ class Parameter
      * @var T
      */
     protected string|int|float|bool|array|DateTimeInterface $value;
-
     protected ParameterType $type;
 
+    /**
+     * @param T $value
+     */
     public function __construct(
         string|int|float|bool|array|DateTimeInterface $value
     ) {
         $this->value = $value;
 
-        if(is_string($value)) {
-            if(preg_match('/^\{\{([a-zA-Z0-9]+\}\}$/', $value, $matches)) {
+        if (is_string($value)) {
+            if (preg_match('/^\{\{([a-zA-Z0-9]+)\}\}$/', $value, $matches)) {
                 $this->value = $matches[1];
                 $this->type = ParameterType::Reference;
             } else {
                 $this->type = ParameterType::String;
             }
-        } elseif(
+        } elseif (
             is_int($value) ||
             is_float($value)
         ) {
             $this->type = ParameterType::Number;
-        } elseif(is_bool($value)) {
+        } elseif (is_bool($value)) {
             $this->type = ParameterType::Boolean;
-        } elseif(is_array($value)) {
+        } elseif (is_array($value)) {
             $this->type = ParameterType::List;
-        } elseif($value instanceof DateTimeInterface) {
+        } elseif ($value instanceof DateTimeInterface) {
             $this->type = ParameterType::Date;
         }
     }

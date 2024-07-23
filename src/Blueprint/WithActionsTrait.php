@@ -58,16 +58,18 @@ trait WithActionsTrait
 
     /**
      * Export for serialization
+     *
+     * @return array<string,Action>
      */
     public function jsonSerialize(): array
     {
-        if(empty($this->actions)) {
+        if (empty($this->actions)) {
             return [];
         }
 
         $output = [];
 
-        foreach($this->actions as $action) {
+        foreach ($this->actions as $action) {
             $output[$action->getSignature()] = $action;
         }
 

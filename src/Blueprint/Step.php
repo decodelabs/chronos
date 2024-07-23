@@ -98,6 +98,8 @@ class Step implements
 
     /**
      * Get awaits
+     *
+     * @return array<string,CarbonInterval|null>
      */
     public function getAwaits(): array
     {
@@ -111,7 +113,7 @@ class Step implements
         string $id,
         string|CarbonInterval|null $duration
     ): void {
-        if($duration !== null) {
+        if ($duration !== null) {
             $duration = CarbonInterval::make($duration);
         }
 
@@ -139,12 +141,14 @@ class Step implements
 
     /**
      * Export for serialization
+     *
+     * @return array<string,mixed>
      */
     public function jsonSerialize(): array
     {
         $await = [];
 
-        foreach($this->await as $key => $value) {
+        foreach ($this->await as $key => $value) {
             $await[$key] = $value ? (string)$value : null;
         }
 

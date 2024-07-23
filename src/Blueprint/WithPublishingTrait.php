@@ -37,7 +37,7 @@ trait WithPublishingTrait
 
     public function getVersion(): string
     {
-        if($this->version === null) {
+        if ($this->version === null) {
             return '0.0.1';
         }
 
@@ -80,6 +80,8 @@ trait WithPublishingTrait
 
     /**
      * Export for serialization
+     *
+     * @return array<string,mixed>
      */
     public function jsonSerialize(): array
     {

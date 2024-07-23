@@ -23,14 +23,14 @@ trait WithIdentityTrait
         ?string $name,
         ?string $description = null
     ) {
-        if(
+        if (
             $id === null &&
             $name === null
         ) {
             throw Exceptional::InvalidArgument(
                 'Id or name must be provided to blueprints'
             );
-        } elseif($id === null) {
+        } elseif ($id === null) {
             $id = Dictum::slug($name);
         } else {
             $name = Dictum::name($id);
@@ -95,6 +95,8 @@ trait WithIdentityTrait
 
     /**
      * Export for serialization
+     *
+     * @return array<string,mixed>
      */
     public function jsonSerialize(): array
     {

@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Chronos;
 
-use JsonSerializable;
-
 trait BlueprintTrait
 {
     /**

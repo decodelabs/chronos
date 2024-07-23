@@ -11,17 +11,20 @@ namespace DecodeLabs\Chronos\Runtime;
 
 use DateTimeInterface;
 
+/**
+ * @phpstan-import-type ParameterValue from Parameter
+ */
 class Stack
 {
     /**
-     * @var array<string,Parameter>
+     * @phpstan-var array<string,Parameter<ParameterValue>>
      */
     protected array $parameters = [];
 
     protected ?Stack $parent = null;
 
     /**
-     * @param array<string,string|int|float|bool|array<mixed>|DateTimeInterface|Parameter> $parameters
+     * @phpstan-param array<ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function __construct(
         array $parameters = [],
@@ -36,22 +39,24 @@ class Stack
 
     /**
      * Set value
+     *
+     * @phpstan-param ParameterValue|Parameter<ParameterValue> $value
      */
     public function set(
         string $key,
         string|int|float|bool|array|DateTimeInterface|Parameter $value
     ): void {
-        if(str_starts_with($key, '$')) {
+        if (str_starts_with($key, '$')) {
             $key = substr($key, 1);
 
-            if($this->parent) {
+            if ($this->parent) {
                 $this->parent->set($key, $value);
                 return;
             }
         }
 
         if (!$value instanceof Parameter) {
-            $value = new Parameter($key, $value);
+            $value = new Parameter($value);
         }
 
         $this->parameters[$key] = $value;
@@ -59,6 +64,8 @@ class Stack
 
     /**
      * Set in parent
+     *
+     * @phpstan-param ParameterValue|Parameter<ParameterValue> $value
      */
     public function parentSet(
         string $key,
@@ -73,6 +80,8 @@ class Stack
 
     /**
      * Get value
+     *
+     * @phpstan-return Parameter<ParameterValue>|null
      */
     public function get(
         string $key

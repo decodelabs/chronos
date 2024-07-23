@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Chronos\Blueprint;
 
-use DecodeLabs\Chronos\Blueprint;
 use DecodeLabs\Chronos\Priority;
 
 trait WithPriorityTrait
@@ -41,6 +40,8 @@ trait WithPriorityTrait
 
     /**
      * Export for serialization
+     *
+     * @return array<string,string>
      */
     public function jsonSerialize(): array
     {

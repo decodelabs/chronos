@@ -9,14 +9,15 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Chronos\Blueprint;
 
-use Carbon\CarbonInterval;
 use DateTimeInterface;
 use DecodeLabs\Chronos\Blueprint;
 use DecodeLabs\Chronos\BlueprintTrait;
-use DecodeLabs\Chronos\Priority;
-use DecodeLabs\Dictum;
+use DecodeLabs\Chronos\Runtime\Parameter;
 use DecodeLabs\Exceptional;
 
+/**
+ * @phpstan-import-type ParameterValue from Parameter
+ */
 class Action implements Blueprint
 {
     use BlueprintTrait;
@@ -25,12 +26,12 @@ class Action implements Blueprint
     protected ?string $return = null;
 
     /**
-     * @var array<string,Parameter>
+     * @phpstan-var array<string,Parameter<ParameterValue>>
      */
     protected array $parameters = [];
 
     /**
-     * @param array<string|int|float|bool|array<string>|DateTimeInterface|Parameter> $parameters
+     * @phpstan-param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function __construct(
         ?string $signature = null,
@@ -38,14 +39,14 @@ class Action implements Blueprint
         ?string $return = null,
         array $parameters = [],
     ) {
-        if($signature !== null) {
+        if ($signature !== null) {
             [
                 'initiator' => $initiator,
                 'return' => $return,
             ] = $this->parseSignature($signature);
         }
 
-        if($initiator === null) {
+        if ($initiator === null) {
             throw Exceptional::InvalidArgument(
                 'Action signature is missing initiator'
             );
@@ -58,6 +59,8 @@ class Action implements Blueprint
 
     /**
      * Parse signature
+     *
+     * @return array{initiator: string, return: string|null}
      */
     public function parseSignature(
         string $signature
@@ -77,8 +80,8 @@ class Action implements Blueprint
     {
         $output = $this->initiator;
 
-        if($this->return !== null) {
-            $output .= ':'.$this->return;
+        if ($this->return !== null) {
+            $output .= ':' . $this->return;
         }
 
         return $output;
@@ -90,9 +93,9 @@ class Action implements Blueprint
     public function setInitiator(
         string $initiator
     ): void {
-        if(!preg_match('/^([A-Z][a-zA-Z0-9]+)\.([A-Z][a-zA-Z0-9]+)$/', $initiator)) {
+        if (!preg_match('/^([A-Z][a-zA-Z0-9]+)\.([A-Z][a-zA-Z0-9]+)$/', $initiator)) {
             throw Exceptional::InvalidArgument(
-                'Invalid action initiator: '.$initiator
+                'Invalid action initiator: ' . $initiator
             );
         }
 
@@ -113,12 +116,12 @@ class Action implements Blueprint
     public function setReturn(
         ?string $return
     ): void {
-        if(
+        if (
             $return !== null &&
             !preg_match('/^\$?[a-zA-Z0-9]+$/', $return)
         ) {
             throw Exceptional::InvalidArgument(
-                'Invalid action return: '.$return
+                'Invalid action return: ' . $return
             );
         }
 
@@ -137,12 +140,12 @@ class Action implements Blueprint
     /**
      * Set parameters
      *
-     * @param array<string,string|int|float|bool|array<string>|DateTimeInterface|Parameter> $parameters
+     * @phpstan-param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function setParameters(
         array $parameters
     ): void {
-        foreach($parameters as $name => $parameter) {
+        foreach ($parameters as $name => $parameter) {
             $this->addParameter($name, $parameter);
         }
     }
@@ -150,7 +153,7 @@ class Action implements Blueprint
     /**
      * Get parameters
      *
-     * @return array<string,Parameter>
+     * @phpstan-return array<string,Parameter<ParameterValue>>
      */
     public function getParameters(): array
     {
@@ -159,12 +162,14 @@ class Action implements Blueprint
 
     /**
      * Add parameter
+     *
+     * @phpstan-param ParameterValue|Parameter<ParameterValue> $parameter
      */
     public function addParameter(
         string $name,
         string|int|float|bool|array|DateTimeInterface|Parameter $parameter
     ): void {
-        if(!$parameter instanceof Parameter) {
+        if (!$parameter instanceof Parameter) {
             $parameter = new Parameter($parameter);
         }
 
@@ -173,6 +178,8 @@ class Action implements Blueprint
 
     /**
      * Get parameter
+     *
+     * @return Parameter<ParameterValue>|null
      */
     public function getParameter(
         string $id
@@ -182,6 +189,8 @@ class Action implements Blueprint
 
     /**
      * Export for serialization
+     *
+     * @return array<string,mixed>
      */
     public function jsonSerialize(): array
     {
