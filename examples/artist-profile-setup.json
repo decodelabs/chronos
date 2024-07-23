@@ -1,0 +1,47 @@
+{
+    "id": "artist-profile-setup",
+    "name": "Artist Profile Setup",
+    "description": "Get your artist profile in check - get your biography written, photos uploaded and best foot forward.",
+    "categories": [ "profile", "setup" ],
+    "duration": "1 week",
+    "priority": "high",
+    "steps": [ {
+            "id": "select-profile",
+            "priority": "critical",
+            "actions": {
+                "Profile.Select:$profile": { }
+            }
+        }, {
+            "id": "choose-name",
+            "priority": "medium",
+            "duration": "2 hours",
+            "actions": {
+                "Profile.GenerateName": { }
+            }
+        }, {
+            "id": "upload-avatar",
+            "priority": "high",
+            "duration": "1 hour",
+            "actions": {
+                "Profile.UploadAvatar": { }
+            }
+        }, {
+            "id": "write-biography",
+            "priority": "medium",
+            "duration": "1 day",
+            "actions": {
+                "Profile.GenerateBiography": { }
+            }
+        }, {
+            "id": "upload-photos",
+            "await": {
+                "select-profile": "5 days",
+                "upload-avatar": null
+            },
+            "priority": "low",
+            "duration": "1 hour",
+            "actions": {
+                "Profile.UploadPhotos": { }
+            }
+        } ]
+}
