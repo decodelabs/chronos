@@ -2,3 +2,4 @@
 * Built initial Blueprint implementation
 * Added Blueprint Factory
 * Constructed JSON Blueprint schemas
+* Integrated JSON validator

@@ -12,9 +12,12 @@ namespace DecodeLabs\Chronos\Blueprint;
 use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\File;
 use DecodeLabs\Chronos\Blueprint;
-//use DecodeLabs\Chronos\Blueprint\Campaign;
+use DecodeLabs\Chronos\Blueprint\Validation\Error as ValidationError;
+use DecodeLabs\Chronos\Blueprint\Validation\Result as ValidationResult;
 use DecodeLabs\Coercion;
 use DecodeLabs\Exceptional;
+use Opis\JsonSchema\Errors\ErrorFormatter as JsonErrorFormatter;
+use Opis\JsonSchema\Validator as JsonValidator;
 use stdClass;
 
 /**
@@ -22,24 +25,6 @@ use stdClass;
  */
 class Factory
 {
-    public const BASE_URL = 'https://schema.decodelabs.com/chronos/';
-
-    public const SCHEMAS = [
-        //'campaign' => Campaign::class,
-        'program' => Program::class,
-        'step' => Step::class,
-    ];
-
-    /**
-     * Load from JSON string
-     */
-    public function loadString(
-        string $json
-    ): Blueprint {
-        $file = Atlas::createMemoryFile($json);
-        return $this->load($file);
-    }
-
     /**
      * Load from any JSON
      */
@@ -48,7 +33,7 @@ class Factory
     ): Blueprint {
         $data = $this->loadJsonFromFile($file);
 
-        $schema = Coercion::toStringOrNull($data['$schema'] ?? null);
+        $schema = Coercion::toStringOrNull($data->{'$schema'} ?? null);
         $class = $this->getSchemaClass($schema);
 
         return match ($class) {
@@ -62,22 +47,81 @@ class Factory
     }
 
     /**
+     * Load from JSON string
+     */
+    public function loadString(
+        string $json
+    ): Blueprint {
+        $file = Atlas::createMemoryFile($json);
+        return $this->load($file);
+    }
+
+    /**
+     * Validate JSON file
+     */
+    public function validate(
+        File $file
+    ): ValidationResult {
+        $data = $this->loadJsonFromFile($file);
+
+        // Validate JSON
+        $validator = new JsonValidator();
+        $schemaPath = dirname(__DIR__, 2) . '/schema';
+
+        foreach (Blueprint::Schemas as $name => $class) {
+            foreach (Blueprint::Versions as $version) {
+                $validator->resolver()?->registerFile(
+                    Blueprint::BaseUrl . $version . '/' . $name . '.json',
+                    $schemaPath . '/' . $version . '/' . $name . '.json'
+                );
+            }
+        }
+
+        $errors = [];
+        $jsonResult = $validator->validate($data, $data->{'$schema'});
+        $jsonError = $jsonResult->error();
+
+        if (
+            !$jsonResult->isValid() &&
+            $jsonError !== null
+        ) {
+            $jsonErrors = (new JsonErrorFormatter())->format($jsonError, true);
+
+            foreach ($jsonErrors as $location => $set) {
+                foreach ($set as $message) {
+                    $errors[] = new ValidationError($location, $message);
+                }
+            }
+        }
+
+        return new ValidationResult(...$errors);
+    }
+
+    /**
+     * Validate JSON string
+     */
+    public function validateString(
+        string $json
+    ): ValidationResult {
+        $file = Atlas::createMemoryFile($json);
+        return $this->validate($file);
+    }
+
+    /**
      * Load JSON from file
-     *
-     * @return array<string,mixed>
      */
     protected function loadJsonFromFile(
         File $file
-    ): array {
+    ): stdClass {
         if (!$file->exists()) {
             throw Exceptional::NotFound(
                 'Blueprint file not found'
             );
         }
 
-        $data = json_decode($file->getContents(), true);
+        $data = json_decode($file->getContents());
 
-        if (!is_array($data)) {
+        if (!$data instanceof stdClass) {
             throw Exceptional::UnexpectedValue(
                 'Invalid blueprint data'
             );
@@ -103,7 +147,7 @@ class Factory
 
         if (
             (
-                !str_starts_with($schema, self::BASE_URL) &&
+                !str_starts_with($schema, Blueprint::BaseUrl) &&
                 !preg_match('/^(\.\.)?\//', $schema)
             ) ||
             !preg_match('/\/[0-9\.]{1,4}\/([a-z0-9-]+)+\.json$/', $schema, $matches)
@@ -115,68 +159,85 @@ class Factory
 
         $name = $matches[1];
 
-        if (!isset(self::SCHEMAS[$name])) {
+        if (!isset(Blueprint::Schemas[$name])) {
             throw Exceptional::UnexpectedValue(
                 'Unknown blueprint schema: ' . $schema
             );
         }
 
-        return self::SCHEMAS[$name];
+        return Blueprint::Schemas[$name];
     }
 
 
     /**
      * Create program
-     *
-     * @param array<string,mixed> $data
      */
     public function createProgram(
-        array $data
+        stdClass $data,
+        string $location = '/'
     ): Program {
         /** @var array<string> */
-        $categories = Coercion::toArray($data['categories'] ?? []);
+        $categories = Coercion::toArray($data->categories ?? []);
         $steps = [];
+        $i = 0;
 
-        foreach (Coercion::toArray($data['steps'] ?? []) as $stepData) {
-            $steps[] = $this->createStep(Coercion::toArray($stepData));
+        foreach (Coercion::toArray($data->steps ?? []) as $stepData) {
+            $steps[] = $this->createStep(
+                data: Coercion::toStdClass($stepData),
+                location: $location . 'steps/' . $i
+            );
+
+            $i++;
         }
 
-        return new Program(
-            id: Coercion::toStringOrNull($data['id'] ?? null),
-            name: Coercion::toStringOrNull($data['name'] ?? null),
-            description: Coercion::toStringOrNull($data['description'] ?? null),
-            version: Coercion::toStringOrNull($data['version'] ?? null),
-            authorName: Coercion::toStringOrNull($data['authorName'] ?? null),
-            authorUrl: Coercion::toStringOrNull($data['authorUrl'] ?? null),
-            categories: $categories,
-            duration: Coercion::toStringOrNull($data['duration'] ?? null),
-            priority: Coercion::toStringOrNull($data['priority'] ?? null) ?? 'medium',
-            steps: $steps
-        );
+        try {
+            return new Program(
+                id: Coercion::toStringOrNull($data->id ?? null),
+                name: Coercion::toStringOrNull($data->name ?? null),
+                description: Coercion::toStringOrNull($data->description ?? null),
+                version: Coercion::toStringOrNull($data->version ?? null),
+                authorName: Coercion::toStringOrNull($data->authorName ?? null),
+                authorUrl: Coercion::toStringOrNull($data->authorUrl ?? null),
+                categories: $categories,
+                duration: Coercion::toStringOrNull($data->duration ?? null),
+                priority: Coercion::toStringOrNull($data->priority ?? null) ?? 'medium',
+                steps: $steps
+            );
+        } catch (Exceptional\Exception $e) {
+            $e->setData(['location' => $location]);
+            throw $e;
+        }
     }
 
     /**
      * Create step
-     *
-     * @param array<string,mixed> $data
      */
     public function createStep(
-        array $data
+        stdClass $data,
+        string $location = '/'
     ): Step {
         /** @var array<string,?string> $await */
-        $await = Coercion::toArray($data['await'] ?? []);
+        $await = Coercion::toArray($data->await ?? []);
         /** @var array<string,array<string,ParameterValue>> */
-        $actions = Coercion::toArray($data['actions'] ?? []);
+        $actions = Coercion::toArray($data->actions ?? []);
 
-        return new Step(
-            id: Coercion::toStringOrNull($data['id'] ?? null),
-            name: Coercion::toStringOrNull($data['name'] ?? null),
-            description: Coercion::toStringOrNull($data['description'] ?? null),
-            priority: Coercion::toStringOrNull($data['priority'] ?? null) ?? 'medium',
-            duration: Coercion::toStringOrNull($data['duration'] ?? null),
-            await: $await,
-            actions: $this->createActionList($actions),
-        );
+        try {
+            return new Step(
+                id: Coercion::toStringOrNull($data->id ?? null),
+                name: Coercion::toStringOrNull($data->name ?? null),
+                description: Coercion::toStringOrNull($data->description ?? null),
+                priority: Coercion::toStringOrNull($data->priority ?? null) ?? 'medium',
+                duration: Coercion::toStringOrNull($data->duration ?? null),
+                await: $await,
+                actions: $this->createActionList(
+                    data: $actions,
+                    location: $location . 'actions'
+                ),
+            );
+        } catch (Exceptional\Exception $e) {
+            $e->setData(['location' => $location]);
+            throw $e;
+        }
     }
 
     /**
@@ -185,36 +246,38 @@ class Factory
      * @param array<string,array<ParameterValue>>|stdClass $data
      */
     public function createActionSet(
-        array|stdClass $data
+        array|stdClass $data,
+        string $location = '/'
     ): ActionSet {
-        return new ActionSet(...$this->createActionList($data));
+        return new ActionSet(...$this->createActionList($data, $location));
     }
 
     /**
      * Create array of actions
      *
-     * @param array<string,array<ParameterValue>>|stdClass $data
+     * @phpstan-param array<string,array<ParameterValue>>|stdClass $data
      * @return array<Action>
      */
     protected function createActionList(
-        array|stdClass $data
+        array|stdClass $data,
+        string $location = '/'
     ): array {
         $actions = [];
 
         foreach ((array)$data as $signature => $parameters) {
-            if (is_null($parameters)) {
+            if ($parameters === null) {
                 $parameters = [];
             }
 
-            if (!is_array($parameters)) {
-                throw Exceptional::UnexpectedValue(
-                    'Invalid action parameters'
-                );
-            }
+            /** @phpstan-var array<string,ParameterValue> $parameters */
+            $parameters = Coercion::toArray($parameters);
 
             $actions[] = new Action(
                 signature: $signature,
-                parameters: $this->prepareParameters($parameters)
+                parameters: $this->prepareParameters(
+                    parameters: $parameters,
+                    location: $location . $signature . '/'
+                )
             );
         }
 
@@ -228,7 +291,8 @@ class Factory
      * @phpstan-return array<string,Parameter<ParameterValue>>
      */
     protected function prepareParameters(
-        array $parameters
+        array $parameters,
+        string $location = '/'
     ): array {
         $output = [];
 
@@ -241,12 +305,20 @@ class Factory
                 )
             ) {
                 /** @var array<string,array<ParameterValue>>|stdClass $value */
-                $actions = $this->createActionSet($value);
+                $actions = $this->createActionSet(
+                    data: $value,
+                    location: $location . $name . '/'
+                );
                 $value = $actions;
             }
 
-            /** @phpstan-var ParameterValue $value */
-            $output[$name] = new Parameter($value);
+            try {
+                /** @phpstan-var ParameterValue $value */
+                $output[$name] = new Parameter($value);
+            } catch (Exceptional\Exception $e) {
+                $e->setData(['location' => $location]);
+                throw $e;
+            }
         }
 
         return $output;

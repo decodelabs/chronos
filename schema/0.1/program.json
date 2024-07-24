@@ -6,10 +6,7 @@
         "$schema": {
             "type": "string",
             "description": "The schema that this document should conform to.",
-            "enum": [
-                "https://schema.decodelabs.com/chronos/0.1/program.json",
-                "../schema/0.1/program.json"
-            ]
+            "const": "https://schema.decodelabs.com/chronos/0.1/program.json"
         },
         "id": {
             "$ref": "shared.json#id",
@@ -46,6 +43,7 @@
             }
         }
     },
+    "additionalProperties": false,
     "required": [
         "id",
         "name",
