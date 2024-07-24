@@ -14,7 +14,8 @@ enum ParameterType
     case String;
     case Number;
     case Boolean;
-    case List;
     case Date;
     case Reference;
+    case List;
+    case Action;
 }

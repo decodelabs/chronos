@@ -12,8 +12,8 @@ namespace DecodeLabs\Chronos\Blueprint;
 use DateTimeInterface;
 use DecodeLabs\Chronos\Blueprint;
 use DecodeLabs\Chronos\BlueprintTrait;
-use DecodeLabs\Chronos\Runtime\Parameter;
 use DecodeLabs\Exceptional;
+use stdClass;
 
 /**
  * @phpstan-import-type ParameterValue from Parameter
@@ -167,7 +167,7 @@ class Action implements Blueprint
      */
     public function addParameter(
         string $name,
-        string|int|float|bool|array|DateTimeInterface|Parameter $parameter
+        string|int|float|bool|DateTimeInterface|array|stdClass|ActionSet|Parameter $parameter
     ): void {
         if (!$parameter instanceof Parameter) {
             $parameter = new Parameter($parameter);
@@ -190,10 +190,14 @@ class Action implements Blueprint
     /**
      * Export for serialization
      *
-     * @return array<string,mixed>
+     * @return array<string,mixed>|object
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): array|object
     {
+        if (empty($this->parameters)) {
+            return (object)[];
+        }
+
         return $this->parameters;
     }
 }

@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace DecodeLabs\Chronos\Runtime;
 
 use DateTimeInterface;
+use DecodeLabs\Chronos\Blueprint\ActionSet;
+use DecodeLabs\Chronos\Blueprint\Parameter;
+use stdClass;
 
 /**
  * @phpstan-import-type ParameterValue from Parameter
@@ -44,7 +47,7 @@ class Stack
      */
     public function set(
         string $key,
-        string|int|float|bool|array|DateTimeInterface|Parameter $value
+        string|int|float|bool|DateTimeInterface|array|stdClass|ActionSet|Parameter $value
     ): void {
         if (str_starts_with($key, '$')) {
             $key = substr($key, 1);
@@ -69,7 +72,7 @@ class Stack
      */
     public function parentSet(
         string $key,
-        string|int|float|bool|array|DateTimeInterface|Parameter $value
+        string|int|float|bool|DateTimeInterface|array|stdClass|ActionSet|Parameter $value
     ): void {
         if ($this->parent) {
             $this->parent->set($key, $value);

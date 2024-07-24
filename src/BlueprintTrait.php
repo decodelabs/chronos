@@ -16,6 +16,17 @@ trait BlueprintTrait
      */
     public function __debugInfo()
     {
-        return $this->jsonSerialize();
+        $output = $this->jsonSerialize();
+
+        /** @phpstan-ignore-next-line */
+        if (is_object($output)) {
+            $output = get_object_vars($output);
+        }
+
+        if (!is_array($output)) {
+            dd($output);
+        }
+
+        return $output;
     }
 }

@@ -16,8 +16,12 @@
         "decodelabs/exceptional": "^0.4.5",
         "decodelabs/guidance": "^0.1.11",
         "decodelabs/slingshot": "^0.1.9",
+        "decodelabs/veneer": "^0.11.1",
 
-        "nesbot/carbon": "^3.7"
+        "nesbot/carbon": "^3.7",
+        "decodelabs/atlas": "^0.11.4",
+        "decodelabs/coercion": "^0.2.9",
+        "decodelabs/glitch-support": "^0.4.6"
     },
     "require-dev": {
         "decodelabs/phpstan-decodelabs": "^0.6.8"
@@ -25,7 +29,10 @@
     "autoload": {
         "psr-4": {
             "DecodeLabs\\Chronos\\": "src/"
-        }
+        },
+        "files": [
+            "src/Context.php"
+        ]
     },
     "extra": {
         "branch-alias": {
