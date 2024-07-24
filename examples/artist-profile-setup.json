@@ -1,5 +1,6 @@
 {
-    "$schema": "https://schema.decodelabs.com/chronos/0.1/program",
+    "-$schema": "https://schema.decodelabs.com/chronos/0.1/program.json",
+    "$schema": "../schema/0.1/program.json",
     "id": "artist-profile-setup",
     "name": "Artist Profile Setup",
     "description": "Get your artist profile in check - get your biography written, photos uploaded and best foot forward.",
@@ -42,7 +43,15 @@
             "priority": "low",
             "duration": "1 hour",
             "actions": {
-                "Profile.UploadPhotos": { }
+                "Profile.UploadPhotos": {
+                    "id": "hi hi",
+                    "count": 5,
+                    "test": {
+                        "Test.Jam": {
+                            "hello": "world"
+                        }
+                    }
+                }
             }
         } ]
 }

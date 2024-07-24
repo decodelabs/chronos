@@ -101,15 +101,19 @@ class Factory
             );
         }
 
-        if (!str_starts_with($schema, self::BASE_URL)) {
+        if (
+            (
+                !str_starts_with($schema, self::BASE_URL) &&
+                !preg_match('/^(\.\.)?\//', $schema)
+            ) ||
+            !preg_match('/\/[0-9\.]{1,4}\/([a-z0-9-]+)+\.json$/', $schema, $matches)
+        ) {
             throw Exceptional::UnexpectedValue(
                 'Unknown blueprint schema: ' . $schema
             );
         }
 
-        $name = substr($schema, strlen(self::BASE_URL));
-        $parts = explode('/', $name, 2);
-        $name = $parts[1] ?? '';
+        $name = $matches[1];
 
         if (!isset(self::SCHEMAS[$name])) {
             throw Exceptional::UnexpectedValue(

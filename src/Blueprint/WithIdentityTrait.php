@@ -36,7 +36,7 @@ trait WithIdentityTrait
             $name = Dictum::name($id);
         }
 
-        $this->id = $id;
+        $this->setId($id);
         $this->name = $name;
         $this->description = $description;
     }
@@ -47,6 +47,16 @@ trait WithIdentityTrait
     public function setId(
         string $id
     ): void {
+        if (
+            !preg_match('/^[a-z0-9-_]+$/', $id) ||
+            strlen($id) < 5 ||
+            strlen($id) > 64
+        ) {
+            throw Exceptional::InvalidArgument(
+                'Invalid blueprint ID: ' . $id
+            );
+        }
+
         $this->id = $id;
     }
 
