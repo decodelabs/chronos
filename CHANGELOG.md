@@ -1,3 +1,4 @@
+## v0.1.1 (2024-08-21)
 * Updated Atlas dependency
 * Updated Veneer dependency and Stub
 
