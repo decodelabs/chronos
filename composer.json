@@ -19,7 +19,7 @@
         "decodelabs/glitch-support": "^0.4.6",
         "decodelabs/guidance": "^0.1.11",
         "decodelabs/slingshot": "^0.1.9",
-        "decodelabs/veneer": "^0.11.1",
+        "decodelabs/veneer": "^0.11.6",
 
         "nesbot/carbon": "^3.7",
         "opis/json-schema": "^2.3"
