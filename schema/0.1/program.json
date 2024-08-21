@@ -1,0 +1,56 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://schema.decodelabs.com/chronos/0.1/program.json",
+    "type": "object",
+    "properties": {
+        "$schema": {
+            "type": "string",
+            "description": "The schema that this document should conform to.",
+            "const": "https://schema.decodelabs.com/chronos/0.1/program.json"
+        },
+        "id": {
+            "$ref": "shared.json#id",
+            "description": "The unique identifier for this program."
+        },
+        "name": {
+            "type": "string",
+            "description": "The name of the program."
+        },
+        "description": {
+            "type": "string",
+            "description": "A short description of what the program does."
+        },
+        "categories": {
+            "type": "array",
+            "description": "A list of IDs of categories that this program belongs to.",
+            "items": {
+                "$ref": "shared.json#id",
+                "description": "The unique identifier for a category."
+            }
+        },
+        "duration": {
+            "type": "string",
+            "description": "A string representation of the estimated time it will take to complete the program."
+        },
+        "priority": {
+            "$ref": "shared.json#priority",
+            "description": "A string representation of the priority of the program."
+        },
+        "steps": {
+            "type": "array",
+            "items": {
+                "$ref": "step.json"
+            }
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "id",
+        "name",
+        "description",
+        "categories",
+        "duration",
+        "priority",
+        "steps"
+    ]
+}

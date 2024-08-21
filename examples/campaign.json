@@ -1,0 +1,68 @@
+{
+    "initial": "6mo-album-release",
+    "programs": [ {
+            "id": "6mo-album-release",
+            "name": "6 Month Album Release",
+            "description": "A 6 month campaign to promote the release of a new album",
+            "duration": "6 months",
+            "priority": "high",
+            "steps": [ {
+                    "id": "select-release",
+                    "priority": "critical",
+                    "actions": {
+                        "Release.Select:$release": {
+                            "unreleased": true
+                        }
+                    }
+                }, {
+                    "id": "schedule-tracks",
+                    "depends": [ "select-release" ],
+                    "priority": "high",
+                    "actions": {
+                        "Release.ListTracks:tracks": {
+                            "release": "{{release}}"
+                        },
+                        "Stagger:track,date": {
+                            "list": "{{tracks}}",
+                            "start": "now",
+                            "duration": "{{duration}}",
+                            "interval": "1 week",
+                            "actions": {
+                                "Program.Initiate": {
+                                    "start": "{{date}}",
+                                    "program": "album-track-promo",
+                                    "parameters": {
+                                        "track": "{{track}}"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } ]
+        }, {
+            "id": "track-promo",
+            "name": "Track Promo",
+            "description": "A campaign to promote a single track for release",
+            "duration": "2 weeks",
+            "priority": "high",
+            "steps": [ {
+                    "id": "select-track",
+                    "priority": "critical",
+                    "actions": {
+                        "Track.Select:$track": {
+                            "release": "{{release}}"
+                        }
+                    }
+                }, {
+                    "id": "create-clips",
+                    "depends": [ "select-track" ],
+                    "priority": "high",
+                    "task": {
+                        "name": "Prepare track clip video for {{track}}",
+                        "description": "Create a short preview clip video that can be used on social media, around 30 seconds long. Either use visuals from the final music video if available, or use an audio visualiser or images as an alternative. Include the track title and artist name in the visuals.",
+                        "duration": "1 day",
+                        "help": "content/video/track-clips"
+                    }
+                } ]
+        } ]
+}

@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "https://schema.decodelabs.com/chronos/0.1/shared.json",
+    "$defs": {
+        "id": {
+            "$anchor": "id",
+            "$id": "#id",
+            "type": "string",
+            "description": "The unique identifier for this item.",
+            "pattern": "^[a-z0-9-_]+$",
+            "minLength": 5,
+            "maxLength": 64
+        },
+        "priority": {
+            "$anchor": "priority",
+            "$id": "#priority",
+            "type": "string",
+            "description": "A string representation of the priority of this item.",
+            "default": "medium",
+            "enum": [
+                "low", "Low",
+                "medium", "Medium",
+                "high", "High",
+                "critical", "Critical"
+            ]
+        }
+    }
+}
