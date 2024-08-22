@@ -11,6 +11,9 @@ namespace DecodeLabs\Chronos\Blueprint;
 
 use DecodeLabs\Chronos\Priority;
 
+/**
+ * @phpstan-require-implements WithPriority
+ */
 trait WithPriorityTrait
 {
     protected Priority $priority = Priority::Medium;

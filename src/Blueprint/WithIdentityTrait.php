@@ -12,6 +12,9 @@ namespace DecodeLabs\Chronos\Blueprint;
 use DecodeLabs\Dictum;
 use DecodeLabs\Exceptional;
 
+/**
+ * @phpstan-require-implements WithIdentity
+ */
 trait WithIdentityTrait
 {
     protected string $id;

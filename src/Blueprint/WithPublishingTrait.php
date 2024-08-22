@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Chronos\Blueprint;
 
+/**
+ * @phpstan-require-implements WithPublishing
+ */
 trait WithPublishingTrait
 {
     protected ?string $version = null;

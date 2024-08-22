@@ -11,6 +11,9 @@ namespace DecodeLabs\Chronos\Blueprint;
 
 use Carbon\CarbonInterval;
 
+/**
+ * @phpstan-require-implements WithDuration
+ */
 trait WithDurationTrait
 {
     protected ?CarbonInterval $duration = null;

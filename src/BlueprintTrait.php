@@ -9,6 +9,9 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Chronos;
 
+/**
+ * @phpstan-require-implements Blueprint
+ */
 trait BlueprintTrait
 {
     /**
