@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://schema.decodelabs.com/chronos/0.1/program.json",
+    "$id": "https://schema.decodelabs.com/destiny/0.1/program.json",
     "type": "object",
     "properties": {
         "$schema": {
             "type": "string",
             "description": "The schema that this document should conform to.",
-            "const": "https://schema.decodelabs.com/chronos/0.1/program.json"
+            "const": "https://schema.decodelabs.com/destiny/0.1/program.json"
         },
         "id": {
             "$ref": "shared.json#id",

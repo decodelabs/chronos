@@ -1,17 +1,17 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos\Runtime;
+namespace DecodeLabs\Destiny\Runtime;
 
 use DateTimeInterface;
-use DecodeLabs\Chronos\Blueprint\ActionSet;
-use DecodeLabs\Chronos\Blueprint\Parameter;
+use DecodeLabs\Destiny\Blueprint\ActionSet;
+use DecodeLabs\Destiny\Blueprint\Parameter;
 use stdClass;
 
 /**

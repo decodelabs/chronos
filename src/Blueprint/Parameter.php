@@ -1,16 +1,16 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos\Blueprint;
+namespace DecodeLabs\Destiny\Blueprint;
 
 use DateTimeInterface;
-use DecodeLabs\Chronos\Blueprint\Factory as BlueprintFactory;
+use DecodeLabs\Destiny\Blueprint\Factory as BlueprintFactory;
 use DecodeLabs\Exceptional;
 use DecodeLabs\Glitch\Dumpable;
 use stdClass;

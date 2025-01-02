@@ -1,12 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema",
-    "$id": "https://schema.decodelabs.com/chronos/0.1/step.json",
+    "$id": "https://schema.decodelabs.com/destiny/0.1/step.json",
     "type": "object",
     "properties": {
         "$schema": {
             "type": "string",
             "description": "The schema that this document should conform to.",
-            "const": "https://schema.decodelabs.com/chronos/0.1/step.json"
+            "const": "https://schema.decodelabs.com/destiny/0.1/step.json"
         },
         "id": {
             "type": "string",

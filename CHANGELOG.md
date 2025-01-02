@@ -1,4 +1,5 @@
-## v0.1.0 (2024-08-21)
+## v0.1.0 (--2025-01-02)
+* Renamed to Destiny
 * Updated Atlas dependency
 * Updated Veneer dependency and Stub
 * Built initial Blueprint implementation

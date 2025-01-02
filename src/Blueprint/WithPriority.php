@@ -1,16 +1,16 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos\Blueprint;
+namespace DecodeLabs\Destiny\Blueprint;
 
-use DecodeLabs\Chronos\Blueprint;
-use DecodeLabs\Chronos\Priority;
+use DecodeLabs\Destiny\Blueprint;
+use DecodeLabs\Destiny\Priority;
 
 interface WithPriority extends Blueprint
 {

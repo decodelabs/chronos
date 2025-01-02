@@ -1,20 +1,20 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos\Blueprint;
+namespace DecodeLabs\Destiny\Blueprint;
 
 use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\File;
-use DecodeLabs\Chronos\Blueprint;
-use DecodeLabs\Chronos\Blueprint\Validation\Error as ValidationError;
-use DecodeLabs\Chronos\Blueprint\Validation\Result as ValidationResult;
 use DecodeLabs\Coercion;
+use DecodeLabs\Destiny\Blueprint;
+use DecodeLabs\Destiny\Blueprint\Validation\Error as ValidationError;
+use DecodeLabs\Destiny\Blueprint\Validation\Result as ValidationResult;
 use DecodeLabs\Exceptional;
 use Opis\JsonSchema\Errors\ErrorFormatter as JsonErrorFormatter;
 use Opis\JsonSchema\Validator as JsonValidator;

@@ -1,19 +1,19 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos;
+namespace DecodeLabs\Destiny;
 
 use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\File;
-use DecodeLabs\Chronos;
-use DecodeLabs\Chronos\Blueprint\Factory as BlueprintFactory;
-use DecodeLabs\Chronos\Blueprint\Validation\Result as ValidationResult;
+use DecodeLabs\Destiny;
+use DecodeLabs\Destiny\Blueprint\Factory as BlueprintFactory;
+use DecodeLabs\Destiny\Blueprint\Validation\Result as ValidationResult;
 use DecodeLabs\Veneer;
 
 class Context
@@ -68,4 +68,4 @@ class Context
 }
 
 // Register the Veneer facade
-Veneer::register(Context::class, Chronos::class);
+Veneer::register(Context::class, Destiny::class);

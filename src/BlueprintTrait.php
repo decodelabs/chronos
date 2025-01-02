@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos;
+namespace DecodeLabs\Destiny;
 
 /**
  * @phpstan-require-implements Blueprint
@@ -26,9 +26,11 @@ trait BlueprintTrait
             $output = get_object_vars($output);
         }
 
+        /*
         if (!is_array($output)) {
             dd($output);
         }
+        */
 
         return $output;
     }

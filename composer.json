@@ -1,5 +1,5 @@
 {
-    "name": "decodelabs/chronos",
+    "name": "decodelabs/destiny",
     "description": "Powerful schedule management system",
     "type": "library",
     "keywords": [ ],
@@ -29,7 +29,7 @@
     },
     "autoload": {
         "psr-4": {
-            "DecodeLabs\\Chronos\\": "src/"
+            "DecodeLabs\\Destiny\\": "src/"
         },
         "files": [
             "src/Context.php"

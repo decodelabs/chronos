@@ -1,16 +1,16 @@
 <?php
 
 /**
- * @package Chronos
+ * @package Destiny
  * @license http://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Chronos;
+namespace DecodeLabs\Destiny;
 
-use DecodeLabs\Chronos\Definition\Category as CategoryDefinition;
-use DecodeLabs\Chronos\Repository;
+use DecodeLabs\Destiny\Definition\Category as CategoryDefinition;
+use DecodeLabs\Destiny\Repository;
 
 interface Category extends Repository
 {
