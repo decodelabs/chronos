@@ -1,3 +1,5 @@
+* Added PHP8.4 to CI workflow
+
 ## v0.1.0 (--2025-01-02)
 * Renamed to Destiny
 * Updated Atlas dependency
