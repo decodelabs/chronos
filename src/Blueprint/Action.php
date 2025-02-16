@@ -48,7 +48,7 @@ class Action implements Blueprint
 
         if ($initiator === null) {
             throw Exceptional::InvalidArgument(
-                'Action signature is missing initiator'
+                message: 'Action signature is missing initiator'
             );
         }
 
@@ -95,7 +95,7 @@ class Action implements Blueprint
     ): void {
         if (!preg_match('/^([A-Z][a-zA-Z0-9]+)\.([A-Z][a-zA-Z0-9]+)$/', $initiator)) {
             throw Exceptional::InvalidArgument(
-                'Invalid action initiator: ' . $initiator
+                message: 'Invalid action initiator: ' . $initiator
             );
         }
 
@@ -121,7 +121,7 @@ class Action implements Blueprint
             !preg_match('/^\$?[a-zA-Z0-9]+$/', $return)
         ) {
             throw Exceptional::InvalidArgument(
-                'Invalid action return: ' . $return
+                message: 'Invalid action return: ' . $return
             );
         }
 

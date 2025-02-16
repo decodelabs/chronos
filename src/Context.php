@@ -68,4 +68,7 @@ class Context
 }
 
 // Register the Veneer facade
-Veneer::register(Context::class, Destiny::class);
+Veneer\Manager::getGlobalManager()->register(
+    Context::class,
+    Destiny::class
+);

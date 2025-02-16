@@ -41,7 +41,7 @@ class Factory
             Program::class => $this->createProgram($data),
             Step::class => $this->createStep($data),
             default => throw Exceptional::UnexpectedValue(
-                'Unknown blueprint schema: ' . $schema
+                message: 'Unknown blueprint schema: ' . $schema
             )
         };
     }
@@ -78,16 +78,19 @@ class Factory
         }
 
         $errors = [];
-        $jsonResult = $validator->validate($data, $data->{'$schema'});
+        /** @var bool|object|string $value */
+        $value = $data->{'$schema'};
+        $jsonResult = $validator->validate($data, $value);
         $jsonError = $jsonResult->error();
 
         if (
             !$jsonResult->isValid() &&
             $jsonError !== null
         ) {
-            $jsonErrors = (new JsonErrorFormatter())->format($jsonError, true);
+            $jsonErrors = new JsonErrorFormatter()->format($jsonError, true);
 
             foreach ($jsonErrors as $location => $set) {
+                /** @var list<string> $set */
                 foreach ($set as $message) {
                     $errors[] = new ValidationError($location, $message);
                 }
@@ -115,7 +118,7 @@ class Factory
     ): stdClass {
         if (!$file->exists()) {
             throw Exceptional::NotFound(
-                'Blueprint file not found'
+                message: 'Blueprint file not found'
             );
         }
 
@@ -123,7 +126,7 @@ class Factory
 
         if (!$data instanceof stdClass) {
             throw Exceptional::UnexpectedValue(
-                'Invalid blueprint data'
+                message: 'Invalid blueprint data'
             );
         }
 
@@ -141,7 +144,7 @@ class Factory
     ): string {
         if ($schema === null) {
             throw Exceptional::UnexpectedValue(
-                'Blueprint schema is missing'
+                message: 'Blueprint schema is missing'
             );
         }
 
@@ -153,7 +156,7 @@ class Factory
             !preg_match('/\/[0-9\.]{1,4}\/([a-z0-9-]+)+\.json$/', $schema, $matches)
         ) {
             throw Exceptional::UnexpectedValue(
-                'Unknown blueprint schema: ' . $schema
+                message: 'Unknown blueprint schema: ' . $schema
             );
         }
 
@@ -161,7 +164,7 @@ class Factory
 
         if (!isset(Blueprint::Schemas[$name])) {
             throw Exceptional::UnexpectedValue(
-                'Unknown blueprint schema: ' . $schema
+                message: 'Unknown blueprint schema: ' . $schema
             );
         }
 
@@ -204,7 +207,7 @@ class Factory
                 steps: $steps
             );
         } catch (Exceptional\Exception $e) {
-            $e->setData(['location' => $location]);
+            $e->data = ['location' => $location];
             throw $e;
         }
     }
@@ -235,7 +238,7 @@ class Factory
                 ),
             );
         } catch (Exceptional\Exception $e) {
-            $e->setData(['location' => $location]);
+            $e->data = ['location' => $location];
             throw $e;
         }
     }
@@ -313,14 +316,14 @@ class Factory
             }
 
             try {
-                /** @phpstan-var ParameterValue $value */
                 $output[$name] = new Parameter($value);
             } catch (Exceptional\Exception $e) {
-                $e->setData(['location' => $location]);
+                $e->data = ['location' => $location];
                 throw $e;
             }
         }
 
+        // @phpstan-ignore-next-line
         return $output;
     }
 }

@@ -146,7 +146,7 @@ class Program implements
 
         if (isset($this->steps[$id])) {
             throw Exceptional::InvalidArgument(
-                'Step ' . $id . ' is already defined'
+                message: 'Step ' . $id . ' is already defined'
             );
         }
 

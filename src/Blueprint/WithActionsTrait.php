@@ -42,7 +42,7 @@ trait WithActionsTrait
     }
 
     /**
-     * @return array<string,Action>
+     * @return array<Action>
      */
     public function getActions(): array
     {

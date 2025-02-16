@@ -16,8 +16,8 @@ use DecodeLabs\Glitch\Dumpable;
 use stdClass;
 
 /**
- * @phpstan-type ParameterValue string|int|float|bool|DateTimeInterface|array<string>|stdClass|ActionSet
- * @template T of string|int|float|bool|DateTimeInterface|array<string>|stdClass|ActionSet
+ * @phpstan-type ParameterValue string|int|float|bool|DateTimeInterface|array<string>|array<string,array<mixed>>|stdClass|ActionSet
+ * @template T of string|int|float|bool|DateTimeInterface|array<string>|array<string,array<mixed>>|stdClass|ActionSet
  */
 class Parameter implements Dumpable
 {
@@ -37,6 +37,7 @@ class Parameter implements Dumpable
 
         if (is_string($value)) {
             if (preg_match('/^\{\{([a-zA-Z0-9]+)\}\}$/', $value, $matches)) {
+                /** @phpstan-ignore-next-line */
                 $this->value = $matches[1];
                 $this->type = ParameterType::Reference;
             } else {
@@ -62,14 +63,17 @@ class Parameter implements Dumpable
                 $this->type = ParameterType::List;
             } else {
                 $this->type = ParameterType::Action;
-                /** @var array<string,array<ParameterValue>>|stdClass $value */
-                $this->value = (new BlueprintFactory())->createActionSet($value);
+                /**
+                 * @var array<string,array<ParameterValue>>|stdClass $value
+                 * @phpstan-ignore-next-line
+                 */
+                $this->value = new BlueprintFactory()->createActionSet($value);
             }
         } elseif ($value instanceof ActionSet) {
             $this->type = ParameterType::Action;
         } else {
             throw Exceptional::InvalidArgument(
-                'Invalid parameter value type'
+                message: 'Invalid parameter value type'
             );
         }
     }

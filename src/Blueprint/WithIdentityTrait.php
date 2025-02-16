@@ -31,7 +31,7 @@ trait WithIdentityTrait
             $name === null
         ) {
             throw Exceptional::InvalidArgument(
-                'Id or name must be provided to blueprints'
+                message: 'Id or name must be provided to blueprints'
             );
         } elseif ($id === null) {
             $id = Dictum::slug($name);
@@ -56,7 +56,7 @@ trait WithIdentityTrait
             strlen($id) > 64
         ) {
             throw Exceptional::InvalidArgument(
-                'Invalid blueprint ID: ' . $id
+                message: 'Invalid blueprint ID: ' . $id
             );
         }
 

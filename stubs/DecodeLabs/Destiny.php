@@ -16,21 +16,21 @@ class Destiny implements Proxy
 {
     use ProxyTrait;
 
-    const Veneer = 'DecodeLabs\\Destiny';
-    const VeneerTarget = Inst::class;
+    public const Veneer = 'DecodeLabs\\Destiny';
+    public const VeneerTarget = Inst::class;
 
-    public static Inst $instance;
+    protected static Inst $_veneerInstance;
 
     public static function loadBlueprint(Ref0|string $file): Ref1 {
-        return static::$instance->loadBlueprint(...func_get_args());
+        return static::$_veneerInstance->loadBlueprint(...func_get_args());
     }
     public static function loadBlueprintString(string $json): Ref1 {
-        return static::$instance->loadBlueprintString(...func_get_args());
+        return static::$_veneerInstance->loadBlueprintString(...func_get_args());
     }
     public static function validateBlueprint(Ref0|string $file): Ref2 {
-        return static::$instance->validateBlueprint(...func_get_args());
+        return static::$_veneerInstance->validateBlueprint(...func_get_args());
     }
     public static function validateBlueprintString(string $json): Ref2 {
-        return static::$instance->validateBlueprintString(...func_get_args());
+        return static::$_veneerInstance->validateBlueprintString(...func_get_args());
     }
 };
