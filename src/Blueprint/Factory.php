@@ -33,7 +33,7 @@ class Factory
     ): Blueprint {
         $data = $this->loadJsonFromFile($file);
 
-        $schema = Coercion::toStringOrNull($data->{'$schema'} ?? null);
+        $schema = Coercion::tryString($data->{'$schema'} ?? null);
         $class = $this->getSchemaClass($schema);
 
         return match ($class) {
@@ -180,13 +180,13 @@ class Factory
         string $location = '/'
     ): Program {
         /** @var array<string> */
-        $categories = Coercion::toArray($data->categories ?? []);
+        $categories = Coercion::asArray($data->categories ?? []);
         $steps = [];
         $i = 0;
 
-        foreach (Coercion::toArray($data->steps ?? []) as $stepData) {
+        foreach (Coercion::asArray($data->steps ?? []) as $stepData) {
             $steps[] = $this->createStep(
-                data: Coercion::toStdClass($stepData),
+                data: Coercion::asStdClass($stepData),
                 location: $location . 'steps/' . $i
             );
 
@@ -195,15 +195,15 @@ class Factory
 
         try {
             return new Program(
-                id: Coercion::toStringOrNull($data->id ?? null),
-                name: Coercion::toStringOrNull($data->name ?? null),
-                description: Coercion::toStringOrNull($data->description ?? null),
-                version: Coercion::toStringOrNull($data->version ?? null),
-                authorName: Coercion::toStringOrNull($data->authorName ?? null),
-                authorUrl: Coercion::toStringOrNull($data->authorUrl ?? null),
+                id: Coercion::tryString($data->id ?? null),
+                name: Coercion::tryString($data->name ?? null),
+                description: Coercion::tryString($data->description ?? null),
+                version: Coercion::tryString($data->version ?? null),
+                authorName: Coercion::tryString($data->authorName ?? null),
+                authorUrl: Coercion::tryString($data->authorUrl ?? null),
                 categories: $categories,
-                duration: Coercion::toStringOrNull($data->duration ?? null),
-                priority: Coercion::toStringOrNull($data->priority ?? null) ?? 'medium',
+                duration: Coercion::tryString($data->duration ?? null),
+                priority: Coercion::tryString($data->priority ?? null) ?? 'medium',
                 steps: $steps
             );
         } catch (Exceptional\Exception $e) {
@@ -220,17 +220,17 @@ class Factory
         string $location = '/'
     ): Step {
         /** @var array<string,?string> $await */
-        $await = Coercion::toArray($data->await ?? []);
+        $await = Coercion::asArray($data->await ?? []);
         /** @var array<string,array<string,ParameterValue>> */
-        $actions = Coercion::toArray($data->actions ?? []);
+        $actions = Coercion::asArray($data->actions ?? []);
 
         try {
             return new Step(
-                id: Coercion::toStringOrNull($data->id ?? null),
-                name: Coercion::toStringOrNull($data->name ?? null),
-                description: Coercion::toStringOrNull($data->description ?? null),
-                priority: Coercion::toStringOrNull($data->priority ?? null) ?? 'medium',
-                duration: Coercion::toStringOrNull($data->duration ?? null),
+                id: Coercion::tryString($data->id ?? null),
+                name: Coercion::tryString($data->name ?? null),
+                description: Coercion::tryString($data->description ?? null),
+                priority: Coercion::tryString($data->priority ?? null) ?? 'medium',
+                duration: Coercion::tryString($data->duration ?? null),
                 await: $await,
                 actions: $this->createActionList(
                     data: $actions,
@@ -273,7 +273,7 @@ class Factory
             }
 
             /** @phpstan-var array<string,ParameterValue> $parameters */
-            $parameters = Coercion::toArray($parameters);
+            $parameters = Coercion::asArray($parameters);
 
             $actions[] = new Action(
                 signature: $signature,
