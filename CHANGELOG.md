@@ -1,3 +1,4 @@
+* Upgraded Slingshot dependency
 * Upgraded Coercion dependency
 * Upgraded PHPStan to v2
 * Tidied boolean logic
