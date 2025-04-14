@@ -11,8 +11,6 @@
 
 Destiny provides an extensible format and operating structures for defining complex event programs.
 
-_Get news and updates on the [DecodeLabs blog](https://blog.decodelabs.com)._
-
 ---
 
 ## Installation
