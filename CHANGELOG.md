@@ -1,6 +1,7 @@
 * Upgraded Slingshot dependency
 * Upgraded Coercion dependency
 * Upgraded PHPStan to v2
+* Removed Guidance dependency
 * Tidied boolean logic
 * Fixed Exceptional syntax
 * Added PHP8.4 to CI workflow
