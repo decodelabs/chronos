@@ -1,17 +1,22 @@
-* Upgraded Slingshot dependency
-* Upgraded Coercion dependency
-* Upgraded PHPStan to v2
-* Removed Guidance dependency
-* Tidied boolean logic
-* Fixed Exceptional syntax
-* Added PHP8.4 to CI workflow
-* Made PHP8.4 minimum version
+# Changelog
 
-## v0.1.0 (--2025-01-02)
-* Renamed to Destiny
-* Updated Atlas dependency
-* Updated Veneer dependency and Stub
-* Built initial Blueprint implementation
-* Added Blueprint Factory
-* Constructed JSON Blueprint schemas
-* Integrated JSON validator
+All notable changes to this project will be documented in this file.<br>
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+### Unreleased
+- Renamed to Destiny
+- Updated Atlas dependency
+- Updated Veneer dependency and Stub
+- Built initial Blueprint implementation
+- Added Blueprint Factory
+- Constructed JSON Blueprint schemas
+- Integrated JSON validator
+- Upgraded Slingshot dependency
+- Upgraded Coercion dependency
+- Upgraded PHPStan to v2
+- Removed Guidance dependency
+- Tidied boolean logic
+- Fixed Exceptional syntax
+- Added PHP8.4 to CI workflow
+- Made PHP8.4 minimum version
