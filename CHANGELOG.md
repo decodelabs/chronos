@@ -20,3 +20,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed Exceptional syntax
 - Added PHP8.4 to CI workflow
 - Made PHP8.4 minimum version
+- Upgraded Atlas to v0.13
