@@ -9,7 +9,8 @@ declare(strict_types=1);
 
 namespace DecodeLabs\Destiny\Blueprint\Validation;
 
-use DecodeLabs\Glitch\Dumpable;
+use DecodeLabs\Nuance\Dumpable;
+use DecodeLabs\Nuance\Entity\NativeObject as NuanceEntity;
 use Generator;
 
 class Result implements Dumpable
@@ -54,16 +55,10 @@ class Result implements Dumpable
     }
 
 
-    public function glitchDump(): iterable
+    public function toNuanceEntity(): NuanceEntity
     {
-        yield 'meta' => [
-            'valid' => $this->isValid()
-        ];
-
-        yield 'sections' => [
-            'meta' => true
-        ];
-
+        $entity = new NuanceEntity($this);
+        $entity->meta['valid'] = $this->isValid();
         $errors = [];
 
         foreach ($this->errors as $error) {
@@ -80,6 +75,7 @@ class Result implements Dumpable
             }
         }
 
-        yield 'values' => $errors;
+        $entity->values = $errors;
+        return $entity;
     }
 }

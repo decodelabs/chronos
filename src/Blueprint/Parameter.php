@@ -12,7 +12,8 @@ namespace DecodeLabs\Destiny\Blueprint;
 use DateTimeInterface;
 use DecodeLabs\Destiny\Blueprint\Factory as BlueprintFactory;
 use DecodeLabs\Exceptional;
-use DecodeLabs\Glitch\Dumpable;
+use DecodeLabs\Nuance\Dumpable;
+use DecodeLabs\Nuance\Entity\NativeObject as NuanceEntity;
 use stdClass;
 
 /**
@@ -97,12 +98,11 @@ class Parameter implements Dumpable
     }
 
 
-    /**
-     * Export for dump
-     */
-    public function glitchDump(): iterable
+    public function toNuanceEntity(): NuanceEntity
     {
-        yield 'className' => $this->type->name;
-        yield 'value' => $this->value;
+        $entity = new NuanceEntity($this);
+        $entity->itemName = $this->type->name;
+        $entity->value = $this->value;
+        return $entity;
     }
 }

@@ -21,3 +21,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added PHP8.4 to CI workflow
 - Made PHP8.4 minimum version
 - Upgraded Atlas to v0.13
+- Switched to Nuance for dump handling
+- Upgraded Exceptional to v0.6
