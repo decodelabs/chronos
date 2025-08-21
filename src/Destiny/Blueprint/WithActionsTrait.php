@@ -28,9 +28,6 @@ trait WithActionsTrait
         $this->setActions(...$actions);
     }
 
-    /**
-     * Set actions
-     */
     public function setActions(
         Action ...$actions
     ): void {
@@ -49,9 +46,6 @@ trait WithActionsTrait
         return $this->actions;
     }
 
-    /**
-     * Add action
-     */
     public function addAction(
         Action $action
     ): void {
@@ -60,8 +54,6 @@ trait WithActionsTrait
 
 
     /**
-     * Export for serialization
-     *
      * @return array<string,Action>
      */
     public function jsonSerialize(): array

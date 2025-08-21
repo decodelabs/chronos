@@ -24,9 +24,6 @@ trait WithDurationTrait
         $this->setDuration($duration);
     }
 
-    /**
-     * Set duration
-     */
     public function setDuration(
         string|CarbonInterval|null $duration
     ): void {
@@ -37,17 +34,12 @@ trait WithDurationTrait
         $this->duration = $duration;
     }
 
-    /**
-     * Get duration
-     */
     public function getDuration(): ?CarbonInterval
     {
         return $this->duration;
     }
 
     /**
-     * Export for serialization
-     *
      * @return array<string,string>
      */
     public function jsonSerialize(): array

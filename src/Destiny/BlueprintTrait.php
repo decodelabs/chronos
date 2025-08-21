@@ -14,9 +14,6 @@ namespace DecodeLabs\Destiny;
  */
 trait BlueprintTrait
 {
-    /**
-     * Export for debug
-     */
     public function __debugInfo()
     {
         $output = $this->jsonSerialize();

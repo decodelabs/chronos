@@ -44,9 +44,6 @@ trait WithIdentityTrait
         $this->description = $description;
     }
 
-    /**
-     * Set blueprint ID
-     */
     public function setId(
         string $id
     ): void {
@@ -63,43 +60,28 @@ trait WithIdentityTrait
         $this->id = $id;
     }
 
-    /**
-     * Get blueprint ID
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     */
     public function setName(
         string $name
     ): void {
         $this->name = $name;
     }
 
-    /**
-     * Get blueprint name
-     */
     public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set description
-     */
     public function setDescription(
         ?string $description
     ): void {
         $this->description = $description;
     }
 
-    /**
-     * Get description
-     */
     public function getDescription(): ?string
     {
         return $this->description;
@@ -107,8 +89,6 @@ trait WithIdentityTrait
 
 
     /**
-     * Export for serialization
-     *
      * @return array<string,mixed>
      */
     public function jsonSerialize(): array

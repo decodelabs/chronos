@@ -7,34 +7,30 @@
 
 declare(strict_types=1);
 
-namespace DecodeLabs\Destiny;
+namespace DecodeLabs;
 
-use DecodeLabs\Atlas;
 use DecodeLabs\Atlas\File;
-use DecodeLabs\Destiny;
+use DecodeLabs\Destiny\Blueprint;
 use DecodeLabs\Destiny\Blueprint\Factory as BlueprintFactory;
 use DecodeLabs\Destiny\Blueprint\Validation\Result as ValidationResult;
-use DecodeLabs\Veneer;
+use DecodeLabs\Kingdom\Service;
+use DecodeLabs\Kingdom\ServiceTrait;
 
-class Context
+class Destiny implements Service
 {
-    /**
-     * Load a blueprint from json
-     */
+    use ServiceTrait;
+
     public function loadBlueprint(
         string|File $file
     ): Blueprint {
         if (is_string($file)) {
-            $file = Atlas::file($file);
+            $file = Atlas::getFile($file);
         }
 
         $factory = new BlueprintFactory();
         return $factory->load($file);
     }
 
-    /**
-     * Load blueprint string
-     */
     public function loadBlueprintString(
         string $json
     ): Blueprint {
@@ -42,23 +38,17 @@ class Context
         return $factory->loadString($json);
     }
 
-    /**
-     * Validate blueprint
-     */
     public function validateBlueprint(
         string|File $file
     ): ValidationResult {
         if (is_string($file)) {
-            $file = Atlas::file($file);
+            $file = Atlas::getFile($file);
         }
 
         $factory = new BlueprintFactory();
         return $factory->validate($file);
     }
 
-    /**
-     * Validate blueprint string
-     */
     public function validateBlueprintString(
         string $json
     ): ValidationResult {
@@ -66,9 +56,3 @@ class Context
         return $factory->validateString($json);
     }
 }
-
-// Register the Veneer facade
-Veneer\Manager::getGlobalManager()->register(
-    Context::class,
-    Destiny::class
-);

@@ -93,9 +93,6 @@ class Program implements
         $this->setSteps(...$steps);
     }
 
-    /**
-     * Set category IDs
-     */
     public function setCategories(
         string ...$categories
     ): void {
@@ -103,8 +100,6 @@ class Program implements
     }
 
     /**
-     * Get category IDs
-     *
      * @return array<string>
      */
     public function getCategories(): array
@@ -113,9 +108,6 @@ class Program implements
     }
 
 
-    /**
-     * Set steps
-     */
     public function setSteps(
         Step ...$steps
     ): void {
@@ -127,8 +119,6 @@ class Program implements
     }
 
     /**
-     * Get steps
-     *
      * @return array<string,Step>
      */
     public function getSteps(): array
@@ -136,9 +126,6 @@ class Program implements
         return $this->steps;
     }
 
-    /**
-     * Add step
-     */
     public function addStep(
         Step $step
     ): void {
@@ -153,9 +140,6 @@ class Program implements
         $this->steps[$id] = $step;
     }
 
-    /**
-     * Get step
-     */
     public function getStep(
         string $id
     ): ?Step {
@@ -164,8 +148,6 @@ class Program implements
 
 
     /**
-     * Export for serialization
-     *
      * @return array<string,mixed>
      */
     public function jsonSerialize(): array

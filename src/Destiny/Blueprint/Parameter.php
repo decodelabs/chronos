@@ -80,8 +80,6 @@ class Parameter implements Dumpable
     }
 
     /**
-     * Get value
-     *
      * @return T
      */
     public function getValue(): string|int|float|bool|DateTimeInterface|array|stdClass|ActionSet
@@ -89,9 +87,6 @@ class Parameter implements Dumpable
         return $this->value;
     }
 
-    /**
-     * Get type
-     */
     public function getType(): ParameterType
     {
         return $this->type;

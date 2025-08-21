@@ -17,17 +17,11 @@ class Error
     ) {
     }
 
-    /**
-     * Get the location of the error
-     */
     public function getLocation(): string
     {
         return $this->location;
     }
 
-    /**
-     * Get the error message
-     */
     public function getMessage(): string
     {
         return $this->message;

@@ -24,26 +24,18 @@ trait WithPriorityTrait
         $this->setPriority($priority);
     }
 
-    /**
-     * Set priority
-     */
     public function setPriority(
         string|Priority $priority
     ): void {
         $this->priority = Priority::fromAny($priority);
     }
 
-    /**
-     * Get priority
-     */
     public function getPriority(): Priority
     {
         return $this->priority;
     }
 
     /**
-     * Export for serialization
-     *
      * @return array<string,string>
      */
     public function jsonSerialize(): array

@@ -82,8 +82,6 @@ class Step implements
 
 
     /**
-     * Set awaits
-     *
      * @param array<string,string|CarbonInterval|null> $await
      */
     public function setAwaits(
@@ -97,8 +95,6 @@ class Step implements
     }
 
     /**
-     * Get awaits
-     *
      * @return array<string,CarbonInterval|null>
      */
     public function getAwaits(): array
@@ -106,9 +102,6 @@ class Step implements
         return $this->await;
     }
 
-    /**
-     * Add await
-     */
     public function addAwait(
         string $id,
         string|CarbonInterval|null $duration
@@ -120,18 +113,12 @@ class Step implements
         $this->await[$id] = $duration;
     }
 
-    /**
-     * Get await duration
-     */
     public function getAwaitDuration(
         string $id
     ): ?CarbonInterval {
         return $this->await[$id] ?? null;
     }
 
-    /**
-     * Will await
-     */
     public function willAwait(
         string $id
     ): bool {
@@ -140,8 +127,6 @@ class Step implements
 
 
     /**
-     * Export for serialization
-     *
      * @return array<string,mixed>
      */
     public function jsonSerialize(): array

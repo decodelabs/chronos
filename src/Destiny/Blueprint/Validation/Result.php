@@ -27,8 +27,6 @@ class Result implements Dumpable
     }
 
     /**
-     * Get all errors
-     *
      * @return array<Error>
      */
     public function getErrors(): array
@@ -36,17 +34,11 @@ class Result implements Dumpable
         return $this->errors;
     }
 
-    /**
-     * Is valid
-     */
     public function isValid(): bool
     {
         return empty($this->errors);
     }
 
-    /**
-     * Scan errors
-     */
     public function scanErrors(): Generator
     {
         foreach ($this->errors as $error) {

@@ -25,9 +25,6 @@ use stdClass;
  */
 class Factory
 {
-    /**
-     * Load from any JSON
-     */
     public function load(
         File $file
     ): Blueprint {
@@ -46,9 +43,6 @@ class Factory
         };
     }
 
-    /**
-     * Load from JSON string
-     */
     public function loadString(
         string $json
     ): Blueprint {
@@ -56,9 +50,6 @@ class Factory
         return $this->load($file);
     }
 
-    /**
-     * Validate JSON file
-     */
     public function validate(
         File $file
     ): ValidationResult {
@@ -100,9 +91,6 @@ class Factory
         return new ValidationResult(...$errors);
     }
 
-    /**
-     * Validate JSON string
-     */
     public function validateString(
         string $json
     ): ValidationResult {
@@ -110,9 +98,6 @@ class Factory
         return $this->validate($file);
     }
 
-    /**
-     * Load JSON from file
-     */
     protected function loadJsonFromFile(
         File $file
     ): stdClass {
@@ -135,8 +120,6 @@ class Factory
 
 
     /**
-     * Get blueprint class for schema
-     *
      * @return class-string<Blueprint>
      */
     protected function getSchemaClass(
@@ -172,9 +155,6 @@ class Factory
     }
 
 
-    /**
-     * Create program
-     */
     public function createProgram(
         stdClass $data,
         string $location = '/'
@@ -212,9 +192,6 @@ class Factory
         }
     }
 
-    /**
-     * Create step
-     */
     public function createStep(
         stdClass $data,
         string $location = '/'
@@ -244,8 +221,6 @@ class Factory
     }
 
     /**
-     * Create action set
-     *
      * @param array<string,array<ParameterValue>>|stdClass $data
      */
     public function createActionSet(
@@ -256,9 +231,7 @@ class Factory
     }
 
     /**
-     * Create array of actions
-     *
-     * @phpstan-param array<string,array<ParameterValue>>|stdClass $data
+     * @param array<string,array<ParameterValue>>|stdClass $data
      * @return array<Action>
      */
     protected function createActionList(
@@ -272,7 +245,7 @@ class Factory
                 $parameters = [];
             }
 
-            /** @phpstan-var array<string,ParameterValue> $parameters */
+            /** @var array<string,ParameterValue> $parameters */
             $parameters = Coercion::asArray($parameters);
 
             $actions[] = new Action(
@@ -288,10 +261,8 @@ class Factory
     }
 
     /**
-     * Prepare parameters
-     *
-     * @phpstan-param array<string,ParameterValue> $parameters
-     * @phpstan-return array<string,Parameter<ParameterValue>>
+     * @param array<string,ParameterValue> $parameters
+     * @return array<string,Parameter<ParameterValue>>
      */
     protected function prepareParameters(
         array $parameters,

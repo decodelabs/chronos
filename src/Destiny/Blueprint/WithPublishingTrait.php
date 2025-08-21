@@ -29,9 +29,6 @@ trait WithPublishingTrait
     }
 
 
-    /**
-     * Set version
-     */
     public function setVersion(
         string $version
     ): void {
@@ -47,43 +44,29 @@ trait WithPublishingTrait
         return $this->version;
     }
 
-    /**
-     * Set author name
-     */
     public function setAuthorName(
         ?string $authorName
     ): void {
         $this->authorName = $authorName;
     }
 
-    /**
-     * Get author name
-     */
     public function getAuthorName(): ?string
     {
         return $this->authorName;
     }
 
-    /**
-     * Set author URL
-     */
     public function setAuthorUrl(
         ?string $authorUrl
     ): void {
         $this->authorUrl = $authorUrl;
     }
 
-    /**
-     * Get author URL
-     */
     public function getAuthorUrl(): ?string
     {
         return $this->authorUrl;
     }
 
     /**
-     * Export for serialization
-     *
      * @return array<string,mixed>
      */
     public function jsonSerialize(): array

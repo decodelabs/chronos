@@ -26,12 +26,12 @@ class Action implements Blueprint
     protected ?string $return = null;
 
     /**
-     * @phpstan-var array<string,Parameter<ParameterValue>>
+     * @var array<string,Parameter<ParameterValue>>
      */
     protected array $parameters = [];
 
     /**
-     * @phpstan-param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
+     * @param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function __construct(
         ?string $signature = null,
@@ -58,8 +58,6 @@ class Action implements Blueprint
     }
 
     /**
-     * Parse signature
-     *
      * @return array{initiator: string, return: string|null}
      */
     public function parseSignature(
@@ -73,9 +71,6 @@ class Action implements Blueprint
         ];
     }
 
-    /**
-     * Get signature
-     */
     public function getSignature(): string
     {
         $output = $this->initiator;
@@ -87,9 +82,6 @@ class Action implements Blueprint
         return $output;
     }
 
-    /**
-     * Set initiator
-     */
     public function setInitiator(
         string $initiator
     ): void {
@@ -102,17 +94,11 @@ class Action implements Blueprint
         $this->initiator = $initiator;
     }
 
-    /**
-     * Get initiator
-     */
     public function getInitiator(): string
     {
         return $this->initiator;
     }
 
-    /**
-     * Set return
-     */
     public function setReturn(
         ?string $return
     ): void {
@@ -128,9 +114,6 @@ class Action implements Blueprint
         $this->return = $return;
     }
 
-    /**
-     * Get return
-     */
     public function getReturn(): ?string
     {
         return $this->return;
@@ -138,9 +121,7 @@ class Action implements Blueprint
 
 
     /**
-     * Set parameters
-     *
-     * @phpstan-param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
+     * @param array<string,ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function setParameters(
         array $parameters
@@ -151,9 +132,7 @@ class Action implements Blueprint
     }
 
     /**
-     * Get parameters
-     *
-     * @phpstan-return array<string,Parameter<ParameterValue>>
+     * @return array<string,Parameter<ParameterValue>>
      */
     public function getParameters(): array
     {
@@ -161,9 +140,7 @@ class Action implements Blueprint
     }
 
     /**
-     * Add parameter
-     *
-     * @phpstan-param ParameterValue|Parameter<ParameterValue> $parameter
+     * @param ParameterValue|Parameter<ParameterValue> $parameter
      */
     public function addParameter(
         string $name,
@@ -177,8 +154,6 @@ class Action implements Blueprint
     }
 
     /**
-     * Get parameter
-     *
      * @return Parameter<ParameterValue>|null
      */
     public function getParameter(
@@ -188,8 +163,6 @@ class Action implements Blueprint
     }
 
     /**
-     * Export for serialization
-     *
      * @return array<string,mixed>|object
      */
     public function jsonSerialize(): array|object

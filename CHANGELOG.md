@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Unreleased
 - Renamed to Destiny
 - Updated Atlas dependency
-- Updated Veneer dependency and Stub
 - Built initial Blueprint implementation
 - Added Blueprint Factory
 - Constructed JSON Blueprint schemas
@@ -23,3 +22,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgraded Atlas to v0.13
 - Switched to Nuance for dump handling
 - Upgraded Exceptional to v0.6
+- Added Kingdom Service support
+- Removed Veneer dependency

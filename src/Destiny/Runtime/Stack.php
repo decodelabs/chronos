@@ -20,14 +20,14 @@ use stdClass;
 class Stack
 {
     /**
-     * @phpstan-var array<string,Parameter<ParameterValue>>
+     * @var array<string,Parameter<ParameterValue>>
      */
     protected array $parameters = [];
 
     protected ?Stack $parent = null;
 
     /**
-     * @phpstan-param array<ParameterValue|Parameter<ParameterValue>> $parameters
+     * @param array<ParameterValue|Parameter<ParameterValue>> $parameters
      */
     public function __construct(
         array $parameters = [],
@@ -41,9 +41,7 @@ class Stack
     }
 
     /**
-     * Set value
-     *
-     * @phpstan-param ParameterValue|Parameter<ParameterValue> $value
+     * @param ParameterValue|Parameter<ParameterValue> $value
      */
     public function set(
         string $key,
@@ -66,9 +64,7 @@ class Stack
     }
 
     /**
-     * Set in parent
-     *
-     * @phpstan-param ParameterValue|Parameter<ParameterValue> $value
+     * @param ParameterValue|Parameter<ParameterValue> $value
      */
     public function parentSet(
         string $key,
@@ -82,9 +78,7 @@ class Stack
     }
 
     /**
-     * Get value
-     *
-     * @phpstan-return Parameter<ParameterValue>|null
+     * @return Parameter<ParameterValue>|null
      */
     public function get(
         string $key
