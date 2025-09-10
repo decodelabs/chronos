@@ -278,7 +278,7 @@ class Factory
                     !array_is_list($value)
                 )
             ) {
-                /** @var array<string,array<ParameterValue>>|stdClass $value */
+                /** @var non-empty-array<string,array<ParameterValue>>|stdClass $value */
                 $actions = $this->createActionSet(
                     data: $value,
                     location: $location . $name . '/'
