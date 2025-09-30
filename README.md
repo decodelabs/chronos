@@ -15,6 +15,8 @@ Destiny provides an extensible format and operating structures for defining comp
 
 ## Installation
 
+This package requires PHP 8.4 or higher.
+
 Install via Composer:
 
 ```bash
