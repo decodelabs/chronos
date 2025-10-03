@@ -24,3 +24,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgraded Exceptional to v0.6
 - Added Kingdom Service support
 - Removed Veneer dependency
+- Upgraded Nuance to v0.2
