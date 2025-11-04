@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @package Destiny
- * @license http://opensource.org/licenses/MIT
+ * Destiny
+ * @license https://opensource.org/licenses/MIT
  */
 
 declare(strict_types=1);
