@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Unreleased
 - Renamed to Destiny
+- Added AGENTS.md
+- Integrated Chorus dev dependency
 - Updated Atlas dependency
 - Built initial Blueprint implementation
 - Added Blueprint Factory
@@ -25,3 +27,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Kingdom Service support
 - Removed Veneer dependency
 - Upgraded Nuance to v0.2
+
