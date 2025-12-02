@@ -2,7 +2,7 @@
     "name": "decodelabs/destiny",
     "description": "Powerful schedule management system",
     "type": "library",
-    "keywords": [],
+    "keywords": [ ],
     "license": "MIT",
     "authors": [
         {
@@ -26,7 +26,7 @@
         "opis/json-schema": "^2.4.1"
     },
     "require-dev": {
-        "decodelabs/chorus": "^0.1",
+        "decodelabs/chorus": ">0",
         "decodelabs/phpstan-decodelabs": "^0.7"
     },
     "autoload": {
